@@ -1,0 +1,59 @@
+<h1>Kontakt mig</h1>
+<div>
+    Her kan du sende mig en email. 
+    Bare indtast din egen email og din besked og tryk send.
+
+</div>
+
+<!--
+
+Anders kan ikke lide det der med at sende data via form - men nu ser vi lige 
+
+Når vi trykker submit så sender den dataen til /api/contact
+Vi vil hellere lave det med en fetch fordi der kan man nemmere tage højde for fejl uden at skifte side og skulle redirecte
+    - og uden at den selv redirecter siden
+
+
+
+<form action="/api/contact" method="post">
+    <label for="name">Navn: </label>
+    <input id="name" type="tel">
+
+    <label for="email">Email:</label>
+    <input id="email" type="email">
+
+    <label for="tlf">Telefonnr.:</label>
+    <input id="tlf" type="number">
+
+    <label for="message">Din besked</label>
+    <textarea id="message"
+    rows="20"
+    cols="40"></textarea>
+
+    <button type="submit">Send besked</button>
+
+</form>
+
+-->
+
+<!--Nu ser vi hvordan mna gør det via fetch 
+    (vhilket er måden vi skal gør det på - fordi så kan vi beder kontrollere, hvis der sker en fejl)-->
+
+    <div>
+        <label for="name">Navn: </label>
+        <input id="name" type="tel">
+    
+        <label for="email">Email:</label>
+        <input id="email" type="email">
+    
+        <label for="tlf">Telefonnr.:</label>
+        <input id="tlf" type="text">
+    
+        <label for="message">Din besked</label>
+        <textarea id="message"
+        rows="20"
+        cols="40"></textarea>
+    
+        <button id="submit-button" type="submit">Send besked</button>
+    
+    </div>
