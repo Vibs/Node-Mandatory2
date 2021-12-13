@@ -20,25 +20,33 @@ app.use(express.urlencoded({extended: true}));
 const contactRouter = require("./routers/contact.js");
 app.use(contactRouter.router);
 
+const projectsRouter = require("./routers/projects.js");
+app.use(projectsRouter.router);
+
 
 //------- Create page-elements to send
-const { createPage } = require("./render.js");
+const { createPage, createDashboardPage} = require("./render.js");
 
 const frontpagePage = createPage("frontpage/frontpage.html", { 
     title: "Nodefolio | Welcome"
 });
-
 const CVPage = createPage("CV/CV.html", { 
     title: "CV"
 });
 const projectsPage = createPage("projects/projects.html", { 
-    title: "Projekter"
+    title: "Projekter",  script: "views/projects/projects.js"
 });
 const contactPage = createPage("contact/contact.html", { 
-    title: "Kontakt"
+    title: "Kontakt", script: "views/contact/contact.js"
 });
 
 
+const dashboardPage = createDashboardPage("dashboard/dashboard.html", { 
+    title: "Dashboard", script: "views/dashboard/dashboard.js"
+});
+const createProjectPage = createDashboardPage("dashboard/createProject.html", { 
+    title: "Opret projekt", script: "views/dashboard/createProject.js"
+});
 
 
 //------ Serve pages
@@ -54,6 +62,16 @@ app.get("/cv", (req, res) => {
 app.get("/projects", (req, res) => {
     res.send(projectsPage);
 });
+
+app.get("/dashboard/projects", (req, res) => {
+    res.send(dashboardPage);
+});
+
+
+
+
+
+
 
 app.get("/contact", (req, res) => {
     res.send(contactPage);

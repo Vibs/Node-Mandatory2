@@ -2,3 +2,30 @@
     height: 200 px;
     width: 300px;
 }
+
+#contact {
+    margin-top: 30px;
+
+    display: grid !important;
+    align-items: center;
+    justify-content: center;
+}
+
+label {
+    display: grid !important;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    height: 30px;
+    font-size: 20px;
+}
+
+#submit-button{
+    height: 40px;
+    font-size: 20px;
+    background-color: rgb(198, 235, 198);
+    padding: 5px 05px 0;
+
+}

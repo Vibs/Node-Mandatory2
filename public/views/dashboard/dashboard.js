@@ -15,6 +15,7 @@ fetch("/api/projects")
  Projekt-obj opbygning:
 
  project = {
+    id: 1,
     name: "Nodefolio",
     year: 2021,
     description: "Dette er en mandatory, hvor vi skal arbejde med express, nodemailer osv.",
@@ -26,18 +27,15 @@ fetch("/api/projects")
 function createProject(project) {
     const projectDiv = document.createElement('div');
     projectDiv.innerHTML = `
-    <h2>${escapeHTML(project.name)}</h2>
+    <div>
+        <h2>${escapeHTML(project.name)}</h2>
+        <a class="edit-button" href="projects/${project.id}">Rediger</a>
+    </div>
     <p class="year"> ${escapeHTML(project.year)}</p>
     <p> ${escapeHTML(project.description)}</p>
     <p>Find projektet på: 
         <a src="${escapeHTML(project.link)}">${escapeHTML(project.link)}</a>
-    <p><hr>`;
+    <p> <hr>`;
 
     projectsWrapper.appendChild(projectDiv);
 }
-
-
-
-
-
-

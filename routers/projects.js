@@ -9,6 +9,35 @@ const router = require("express").Router();
  * 
  */
 
+
+//GET alle
+
+const projects = [
+    {
+        id: "1",
+        name: "Nodefolio",
+        year: "2021",
+        description: "Dette er en mandatory, hvor vi skal arbejde med express, nodemailer osv.",
+        link: "https://github.com/Vibs/Node-Mandatory2"
+    },
+    {
+        id: "1",
+        name: "Noget andet",
+        year: "2022",
+        description: "Dette er en vildt godt beskrivelse.",
+        link: "andetLink"
+    }
+];
+// POST
+router.get("/api/projects", (req, res) => {
+
+    // TODO hent fra db
+ 
+
+    // midlertidig
+    res.send({projects: projects});
+});
+
 // CRUD = POST, GET, Update, Delete
 
 //GET én fra id
