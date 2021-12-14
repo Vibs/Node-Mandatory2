@@ -1,6 +1,6 @@
 const submitButton = document.getElementById("submit-button");
 
-submitButton.addEventListener("click", createProject());
+submitButton.addEventListener("click", createProject);
 
 function createProject() {
     /*
@@ -13,15 +13,15 @@ function createProject() {
     const description =  document.getElementById('description').value;
     const link = document.getElementById('link').value;
 
-    if(title && year && description && link){
+    if(title && year && description){
         const project = {
             title: title,
-            email: email,
-            tlf: tlf,
-            message: message
+            year: year,
+            description: description,
+            link: link
         }
 
-        fetch("api/projects", {
+        fetch("/api/projects", {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json; charset=UTF-8' // denne linje siger at dataen som vi sender er en string 
@@ -29,6 +29,7 @@ function createProject() {
             body: JSON.stringify(project) // men siden vi sender JSON, så er vi er nødt til at lave det til en string via stringify
         })
         .then(response => {
+            console.log(response);
             if(response.status === 200) {
                 //Ja, I know den er grim puhaaa
                 alert("Projektet blev oprettet");

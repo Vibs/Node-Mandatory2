@@ -23,12 +23,11 @@ function createPage(path, options) {
 const dashboardNav = fs.readFileSync("./public/dashboard-views/view-components/navbar/navbar.html", "utf8");
 
 function createDashboardPage(path, options) {
-    return (dashboardNav + fs.readFileSync(`./public/dashboard-views/${path}`, "utf8"))
+    return (dashboardNav + fs.readFileSync(`./public/dashboard-views/${path}`, "utf8") + footer)
             .replace("%%DOCUMENT_TITLE%%", options?.title || "Nodefolio")
             .replace("%%SCRIPT%%", options?.script ? `<script src="${options.script}"></script>` : null)
             .replace("%%ACTIVE_NAV_LINK%%", options?.activeNavLink);
 }
-
 
 export {
     createPage, createDashboardPage

@@ -8,7 +8,7 @@ fetch("/api/projects")
     console.log(result);
 
     //! siger .projects fordi result = objektet med en key som hedder projects
-    result.projects.forEach(createProject);
+    result.forEach(createProject);
 });
 
 /**

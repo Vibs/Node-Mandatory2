@@ -10,13 +10,13 @@ import { createDashboardPage} from "../render.js";
 const dashboardPage = createDashboardPage("frontpage/frontpage.html", { 
     title: "Dashboard", 
     activeNavLink: "/dashboard",
-    script: "dashboard-views/frontpage/frontpage.js"
+    script: "/dashboard-views/frontpage/frontpage.js"
 });
 
 const createProjectPage = createDashboardPage("create-project/createProject.html", { 
     title: "Opret projekt", 
     activeNavLink: "/dashboard/createProject", 
-    script: "dashboard-views/create-project/createProject.js"
+    script: "/dashboard-views/create-project/createProject.js"
 });
 
 //--------SERVE PAGES
