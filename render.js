@@ -1,6 +1,6 @@
-const fs = require("fs");
+import fs from "fs";
 
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
 
 const nav = fs.readFileSync("./public/main-views/view-components/navbar/navbar.html", "utf8");
@@ -30,7 +30,7 @@ function createDashboardPage(path, options) {
 }
 
 
-module.exports = {
+export {
     createPage, createDashboardPage
 };
 

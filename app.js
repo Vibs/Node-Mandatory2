@@ -4,13 +4,13 @@
 
 */
 
-const express = require("express");
+import express from "express";
 const app = express();
 
 // defines that express finds static files in the public-folder
 
-app.use(express.static(__dirname + '/public'));
-//app.use(express.static("public"));
+//app.use(express.static(__dirname + '/public'));
+app.use(express.static("public"));
 
 // makes express interpret incoming data as json
 app.use(express.json());
@@ -20,18 +20,18 @@ app.use(express.urlencoded({extended: true}));
 
 //------- ROUTES
 
-const contactRouter = require("./routers/contact.js");
+import contactRouter from "./routers/contact.js";
 app.use(contactRouter.router);
 
-const projectsRouter = require("./routers/projects.js");
+import projectsRouter from "./routers/projects.js";
 app.use(projectsRouter.router);
 
-const dashboardRouter = require("./routers/dashboard.js");
+import dashboardRouter from "./routers/dashboard.js";
 app.use(dashboardRouter.router);
 
 
 //------- CREATE PAGE ELEMENTS TO BE SERVED
-const { createPage, createDashboardPage} = require("./render.js");
+import { createPage, createDashboardPage} from "./render.js";
 
 const frontpagePage = createPage("frontpage/frontpage.html", { 
     title: "Nodefolio | Welcome",

@@ -1,43 +1,60 @@
-const router = require("express").Router();
+import express from "express";
+const router = express.Router();
 
-/**
- * app.get("/dankmemes/:id", (req, res) => {
-    const foundMeme = dankMemes.find(dankMeme => dankMeme.id === Number(req.params.id));
-    foundMeme ? res.send(foundMeme) : res.sendStatus(404);
-});
- * 
- * 
- */
+import { connection } from "../database/connectSqlite.js";
 
 
-//GET alle
-
-const projects = [
+const hardProjects = [
     {
         id: "1",
-        name: "Nodefolio",
+        title: "Nodefolio",
         year: "2021",
         description: "Dette er en mandatory, hvor vi skal arbejde med express, nodemailer osv.",
         link: "https://github.com/Vibs/Node-Mandatory2"
     },
     {
         id: "1",
-        name: "Noget andet",
+        title: "Noget andet",
         year: "2022",
         description: "Dette er en vildt godt beskrivelse.",
         link: "andetLink"
     }
 ];
-// POST
-router.get("/api/projects", (req, res) => {
+
+// GET alle
+router.get("/api/projects", async (req, res) => {
     console.log("Hej fra api/projects");
 
     // TODO hent fra db
- 
+    const projects = await connection.all("SELECT * from projects")
 
     // midlertidig
     res.send({projects: projects});
 });
+
+
+// POST
+router.post("/api/projects", async (req, res) => {
+
+    const projectToCreate = req.body;
+    connection.run(
+        "INSERT INTO projects ('title', 'year', 'description', 'link') VALUES (?, ?, ?, ?)", 
+        projectToCreate.title, projectToCreate.year, projectToCreate.description, projectToCreate.link)
+
+    // send den der er blevet sat ind tilbage
+    res.send(projectToCreate);
+});
+
+
+
+
+
+
+
+
+
+
+
 
 // CRUD = POST, GET, Update, Delete
 
@@ -54,15 +71,6 @@ router.get("/api/projects/:id", (req, res) => {
     res.status().send({message: "OK"});
 });
 
-// POST
-router.post("/api/projects", (req, res) => {
-
-    
-    console.log(req.body);
-
-    // midlertidig
-    res.status().send({message: "OK"});
-});
 
 
 // UPDATE TODO eller patch??
@@ -95,6 +103,20 @@ router.delete("api/projects/:id", (req, res) => {
 });
 
 
-module.exports = {
+export default {
     router
 };
+
+
+
+/**
+ * app.get("/dankmemes/:id", (req, res) => {
+    const foundMeme = dankMemes.find(dankMeme => dankMeme.id === Number(req.params.id));
+    foundMeme ? res.send(foundMeme) : res.sendStatus(404);
+});
+ * 
+ * 
+ */
+
+
+//GET alle

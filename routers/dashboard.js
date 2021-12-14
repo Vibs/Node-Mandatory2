@@ -1,7 +1,9 @@
-const router = require("express").Router();
+import express from "express";
+
+const router = express.Router();
 
 //------- CREATE PAGE ELEMENTS TO BE SERVED
-const { createDashboardPage} = require("../render.js");
+import { createDashboardPage} from "../render.js";
 
 // til dashboard-sider bruger jeg createDashboardPage-func i stedet for createPage, 
 // fordi den tager en anden nav-bar og ingen footer
@@ -36,6 +38,6 @@ router.get("/dashboard/editProject/:id", (req, res) => {
 
 
 
-module.exports = {
+export default {
     router
 };

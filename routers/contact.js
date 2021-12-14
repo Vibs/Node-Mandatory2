@@ -1,6 +1,7 @@
-const router = require("express").Router();
+import express from "express";
+const router = express.Router();
 
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 router.post("/api/contact", (req, res) => {
 
@@ -36,6 +37,6 @@ router.post("/api/contact", (req, res) => {
 
 
 
-module.exports = {
+export default {
     router
 };
