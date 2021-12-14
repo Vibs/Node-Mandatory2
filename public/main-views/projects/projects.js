@@ -1,3 +1,5 @@
+console.log("HEJ!!!!!");
+
 const projectsWrapper = document.getElementById("projects-wrapper");
 
 

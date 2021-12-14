@@ -30,6 +30,7 @@ const projects = [
 ];
 // POST
 router.get("/api/projects", (req, res) => {
+    console.log("Hej fra api/projects");
 
     // TODO hent fra db
  

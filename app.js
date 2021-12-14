@@ -1,5 +1,8 @@
-const dotenv = require('dotenv');
-dotenv.config();
+/* TODO
+- opdater .env_sample-filen så den indeholder alle de rigtige
+- slet dashboard-menupunkt i alm. navbar
+
+*/
 
 const express = require("express");
 const app = express();
@@ -23,59 +26,55 @@ app.use(contactRouter.router);
 const projectsRouter = require("./routers/projects.js");
 app.use(projectsRouter.router);
 
+const dashboardRouter = require("./routers/dashboard.js");
+app.use(dashboardRouter.router);
 
-//------- Create page-elements to send
+
+//------- CREATE PAGE ELEMENTS TO BE SERVED
 const { createPage, createDashboardPage} = require("./render.js");
 
 const frontpagePage = createPage("frontpage/frontpage.html", { 
-    title: "Nodefolio | Welcome"
+    title: "Nodefolio | Welcome",
 });
 const CVPage = createPage("CV/CV.html", { 
-    title: "CV"
+    title: "CV",
+    activeNavLink: "/CV", 
 });
 const projectsPage = createPage("projects/projects.html", { 
-    title: "Projekter",  script: "views/projects/projects.js"
+    title: "Projekter",  
+    activeNavLink: "/projects", 
+    script: "main-views/projects/projects.js"
 });
 const contactPage = createPage("contact/contact.html", { 
-    title: "Kontakt", script: "views/contact/contact.js"
+    title: "Kontakt", 
+    activeNavLink: "/contact", 
+    script: "main-views/contact/contact.js"
 });
 
-
-const dashboardPage = createDashboardPage("dashboard/dashboard.html", { 
-    title: "Dashboard", script: "views/dashboard/dashboard.js"
-});
-const createProjectPage = createDashboardPage("dashboard/createProject.html", { 
-    title: "Opret projekt", script: "views/dashboard/createProject.js"
-});
-
-
-//------ Serve pages
+//------ SERVE PAGES
 
 app.get("/", (req, res) => {
     res.send(frontpagePage);
 });
-
 app.get("/cv", (req, res) => {
     res.send(CVPage);
 });
-
 app.get("/projects", (req, res) => {
     res.send(projectsPage);
 });
-
-app.get("/dashboard/projects", (req, res) => {
-    res.send(dashboardPage);
-});
-
-
-
-
-
-
-
 app.get("/contact", (req, res) => {
     res.send(contactPage);
 });
+
+
+
+
+
+
+
+
+
+
 
 
 

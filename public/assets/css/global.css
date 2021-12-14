@@ -1,9 +1,27 @@
+body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 30px;
+}
+
+main{
+    min-height: calc(100vh - 303px);
+    text-align: center;
+}
+
+.align-vert-hor {
+    display: flex;
+    justify-content: center; /*horizontally*/
+    align-items: center; /*vertically*/
+}
+
+
+/*----------FORMS---------*/
 #text {
     height: 200 px;
     width: 300px;
 }
 
-#contact {
+#form {
     margin-top: 30px;
 
     display: grid !important;

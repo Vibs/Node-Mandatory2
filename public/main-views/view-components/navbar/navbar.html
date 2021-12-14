@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <!--Stylesheets-->
-    <link rel="stylesheet" href="./assets/global.css">
-    <link rel="stylesheet" href="./views/contact/contact.css">
-    <link rel="stylesheet" href="./views/projects/projects.css">
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/navbar.css">
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    <link rel="stylesheet" href="/main-views/projects/projects.css">
 
 
     <!--Font-->
@@ -16,7 +17,11 @@
     -->
 
     <!--Scripts-->
-    <script src="./assets/lib/escapeHTML.js"></script>
+    <script>
+        const activeNavLink = "%%ACTIVE_NAV_LINK%%";
+    </script>
+    <script src="/main-views/view-components/navbar/navbar.js"></script>
+    <script src="/assets/lib/escapeHTML.js"></script>
 
     <title>%%DOCUMENT_TITLE%%</title>
 </head>
@@ -29,8 +34,7 @@
         <a href="/cv">CV</a>    
         <a href="/projects">Projekter</a>    
         <a href="/contact">Kontakt</a>
-
-        <a href="/dashboard/projects">Kontakt</a> <!--SLET IGEN-->
+        <a href="/dashboard">DASH</a> <!--SLET IGEN-->
      
     </nav>
 
