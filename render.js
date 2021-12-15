@@ -13,7 +13,7 @@ const footer = fs.readFileSync("./public/main-views/view-components/footer/foote
 function createPage(path, options) {
     return (nav + fs.readFileSync(`./public/main-views/${path}`, "utf8") + footer)
             .replace("%%DOCUMENT_TITLE%%", options?.title || "Nodefolio")
-            .replace("%%SCRIPT%%", options?.script ? `<script src="${options.script}"></script>` : null)
+            .replace("%%SCRIPT%%", options?.script ? `<script src="${options.script}"></script>` : "")
             .replace("%%ACTIVE_NAV_LINK%%", options?.activeNavLink);
 }
 
@@ -25,7 +25,8 @@ const dashboardNav = fs.readFileSync("./public/dashboard-views/view-components/n
 function createDashboardPage(path, options) {
     return (dashboardNav + fs.readFileSync(`./public/dashboard-views/${path}`, "utf8") + footer)
             .replace("%%DOCUMENT_TITLE%%", options?.title || "Nodefolio")
-            .replace("%%SCRIPT%%", options?.script ? `<script src="${options.script}"></script>` : null)
+            .replace("%%SCRIPT%%", options?.script ? `<script src="${options.script}"></script>` : "")
+            .replace("%%CSS%%", options?.css ? `<link rel="stylesheet" href="${options.css}">` : "")
             .replace("%%ACTIVE_NAV_LINK%%", options?.activeNavLink);
 }
 

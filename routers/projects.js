@@ -13,6 +13,8 @@ router.get("/api/projects", async (req, res) => {
 
 // POST
 router.post("/api/projects", async (req, res) => {
+
+    console.log("Hej fra api/projects");
     const projectToCreate = req.body;
 
     connection.run(
@@ -24,57 +26,39 @@ router.post("/api/projects", async (req, res) => {
 
 //GET én fra id
 router.get("/api/projects/:id", async (req, res) => {
+    console.log("HEEEEEEEJ fra router");
     // henter op fra db ud fra id
-    const foundProject = await connection.all("SELECT * from projects where id = ?", [req.params.id]);
+    const foundProject = await connection.all("SELECT * from projects WHERE id = ?", [req.params.id]);
     
     // hvis fundet, send tilbage, ellers 404
     foundProject ? res.send(foundProject) : res.sendStatus(404);
 });
 
+//------------------
 
+// UPDATE
+router.put("/api/projects/:id",  (req, res) => {
 
+    const projectToUpdate = req.body.projectFromForm;
 
+    console.log("projectToUpdate", projectToUpdate);
 
+    connection.run("UPDATE projects SET title = ?, year = ?, description = ?, link = ? WHERE id = ?", 
+    [projectToUpdate.title, projectToUpdate.year, projectToUpdate.description,projectToUpdate.link, req.params.id]);
 
-
-
-
-
-// CRUD = POST, GET, Update, Delete
-
-
-
-
-
-// UPDATE TODO eller patch??
-router.patch("/api/projects/:id", (req, res) => {
-
-    /*
-    let memeToUpdate;
-    dankMemes = dankMemes.map(dankMeme => {
-        if (dankMeme.id === Number(req.params.id)) {
-            memeToUpdate = { ...dankMeme, ...req.body, id: dankMeme.id };
-            return memeToUpdate;
-        }
-        return dankMeme;
-    });
-    memeToUpdate ? res.send(memeToUpdate): res.sendStatus(404);
-    */
+    res.send(projectToUpdate);
 });
 
 // DELETE
-router.delete("api/projects/:id", (req, res) => {
-    /*
-    let foundMemeToDelete = false;
-    dankMemes = dankMemes.filter(dankMeme => {
-        const notToDelete = dankMeme.id !== Number(req.params.id);
-        if (!notToDelete) foundMemeToDelete = true;
-        return notToDelete;
-    });
-    foundMemeToDelete ? res.sendStatus(200) : res.sendStatus(404);
-    */
-});
+router.delete("/api/projects/:id", async (req, res) => {
 
+    await connection.run("DELETE FROM projects WHERE id = ?", [req.params.id], function(err) {
+        if (err) {
+          res.sendStatus(500);
+        }
+      });
+    res.sendStatus(200);
+});
 
 export default {
     router

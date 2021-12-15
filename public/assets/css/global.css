@@ -4,7 +4,7 @@ body {
 }
 
 main{
-    min-height: calc(100vh - 303px);
+    min-height: calc(100vh - 263px);
     text-align: center;
 }
 
@@ -40,10 +40,36 @@ input {
     font-size: 20px;
 }
 
+textarea {
+    font-size: 20px;
+}
+
 #submit-button{
+    height: 40px;
+    font-size: 20px;
+    background-color: rgb(180, 237, 180);
+    margin: 5px 15px 5px 15px;
+
+}
+
+.submit-button{
     height: 40px;
     font-size: 20px;
     background-color: rgb(198, 235, 198);
     padding: 5px 05px 0;
+}
 
+.delete-button{
+    height: 40px;
+    font-size: 20px;
+    background-color: rgb(238, 198, 189);
+    margin: 5px 15px 5px 15px;
+}
+
+
+
+
+embed {
+    width: 50%;
+    height: 1000px;
 }
