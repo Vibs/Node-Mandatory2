@@ -1,13 +1,17 @@
 {
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node node_modules/something/server.js & node server.js && fg",
         "create-sqlite-db": "node ./database/createSqliteSchema.js",
-        "create-admin-db": "node ./database/createAdminSchema.js"
+        "create-admin-db": "node ./database/createAdminSchema.js",
+        "devStart": "nodemon.cmd app.js",
+        "devStartAuth": "nodemon.cmd authServer.js"
     },
     "type": "module",
     "dependencies": {
         "bcrypt": "^5.0.1",
         "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
         "dotenv": "^10.0.0",
         "express": "^4.17.1",
         "jsonwebtoken": "^8.5.1",

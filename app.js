@@ -53,6 +53,12 @@ const contactPage = createPage("contact/contact.html", {
     script: "main-views/contact/contact.js"
 });
 
+const loginPage = createPage("login/login.html", { 
+    title: "Log ind", 
+    activeNavLink: "/login", 
+    script: "main-views/login/login.js"
+});
+
 //------ SERVE PAGES
 
 app.get("/", (req, res) => {
@@ -68,72 +74,47 @@ app.get("/contact", (req, res) => {
     res.send(contactPage);
 });
 
+app.get("/login", (req, res) => {
+    res.send(loginPage);
+});
+
 /*-------------------------------------------------------------------------------DASHBOARD*/ 
 
 
 //------------------login
-import bcrypt from "bcryptjs";
-/*
-import bcrypt from "bcryptjs";
-import { createConnection } from "./database/connectSqlite.js";
-
-(async () => {
-    const connection = await createConnection();
-
-    const user = await connection.all("SELECT * FROM admins WHERE username = ?", process.env.ADMIN_USERNAME);
-
-    console.log("user", user);
-    // hvis der ikke allerede findes en bruger i db med brugernavet
-    if(user[0] == null){
-        try{
-            const salt = await bcrypt.genSalt();
-            const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, salt);
-    
-            console.log(await bcrypt.compare(process.env.ADMIN_PASSWORD, hashedPassword));
-    
-            connection.run(
-                "INSERT INTO admins ('username', 'password') VALUES (?, ?)", 
-                [process.env.ADMIN_USERNAME, hashedPassword]); // bcrypt saves the salt inside the password
-        } catch {
-            console.log("ERROR in creating admin");
-        }
-    }
-})()
-*/
-
 
 import jwt from "jsonwebtoken";
 
-import { connection } from "./database/connectSqlite.js";
-
-app.post("/login", async (req, res) => {
-    // authenticate user
-    //https://www.youtube.com/watch?v=Ud5xKCYQTjM
-
-    // så jwt
-    //https://www.youtube.com/watch?v=mbsmsi7l3r4
-    const user = req.body;
-  
-    const adminFromDb = await connection.all("SELECT * FROM admins WHERE username=?", user.username);
-    
-    console.log(adminFromDb);
-    console.log(adminFromDb[0].password);
-
-
-    if(!adminFromDb){
-        res.status(400).send('Cannot find user');
-    }
-    try{
-        if(await bcrypt.compare(user.password, adminFromDb[0].password)){
-            res.sendStatus(200);
-        }
-        res.sendStatus(403);// forbidden
-    } catch{
-        res.sendStatus(500);
-    }
-
-
+/* HER
+app.get("/posts", authenticateToken, (req, res) => {
+    res.json(posts.filter(post => post.username === req.user.name));
 });
+*/
+
+
+function authenticateToken(req, res, next){
+
+    const authHeader = req.headers['authorization']; // headeren har formattet: Bearer TOKEN
+
+    console.log(req.headers);
+    const token = authHeader && authHeader.split(' ')[1]; // derfor splitter vi ved mellemrum
+
+    if(token == null){
+        // vi ved nu at de ikke har sendt en token - derfor ingen access
+        return res.sendStatus(401);
+    }
+
+    // user == det objekt som vi i get(/login) seriliserede i jwt.sign()
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, user) => {
+        if(error){
+            // der VAR en token, men den var ikke valid
+            return res.sendStatus(403);
+        }
+        // sætter user på req
+        req.user = user; // denne bruger vi så til at sortere hvilken data de får lov til at se i app.get("/posts", authenticateToken, (req, res) => {
+        next(); // kalder den callback som bliver givet med når vi kalder authenticateToken()-func
+    })
+}
 
 
 //------------------resten
@@ -155,7 +136,15 @@ const createProjectPage = createDashboardPage("create-project/createProject.html
 
 //--------SERVE PAGES
 app.get("/dashboard", (req, res) => {
+
+    //const refresh_tokens = await connection.all("SELECT * FROM refresh_tokens")
+
+
     res.send(dashBoardFrontpage)
+    
+    
+    //console.log(await connection.all("SELECT * FROM refresh_tokens"));
+    //res.sendStatus(403)
 });
 app.get("/dashboard/createProject", (req, res) => {
     res.send(createProjectPage)

@@ -29,6 +29,8 @@ router.get("/api/projects/:id", async (req, res) => {
     console.log("HEEEEEEEJ fra router");
     // henter op fra db ud fra id
     const foundProject = await connection.all("SELECT * from projects WHERE id = ?", [req.params.id]);
+
+    console.log("foundProject", foundProject);
     
     // hvis fundet, send tilbage, ellers 404
     foundProject ? res.send(foundProject) : res.sendStatus(404);
