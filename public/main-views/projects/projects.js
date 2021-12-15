@@ -1,4 +1,3 @@
-console.log("HEJ!!!!!");
 
 const projectsWrapper = document.getElementById("projects-wrapper");
 
@@ -6,11 +5,7 @@ const projectsWrapper = document.getElementById("projects-wrapper");
 // få fat i alt 
 fetch("/api/projects")
 .then(response => response.json())
-.then(result => {
-    console.log(result);
-
-    result.forEach(createProject);
-});
+.then(result => { result.forEach(createProject) });
 
 /**
  Projekt-obj opbygning:

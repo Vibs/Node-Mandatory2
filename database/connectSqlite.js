@@ -5,14 +5,14 @@ export let connection;
 
 (async() => {
     connection = await open({
-        filename: "./projects.db",
+        filename: "./nodefolio.db",
         driver: sqlite3.Database
     });
 })()
 
 export async function createConnection() {
     return await open({
-        filename: "./projects.db",
+        filename: "./nodefolio.db",
         driver: sqlite3.Database
     });
 }

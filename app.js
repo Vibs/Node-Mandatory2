@@ -71,6 +71,75 @@ app.get("/contact", (req, res) => {
 /*-------------------------------------------------------------------------------DASHBOARD*/ 
 
 
+//------------------login
+import bcrypt from "bcryptjs";
+/*
+import bcrypt from "bcryptjs";
+import { createConnection } from "./database/connectSqlite.js";
+
+(async () => {
+    const connection = await createConnection();
+
+    const user = await connection.all("SELECT * FROM admins WHERE username = ?", process.env.ADMIN_USERNAME);
+
+    console.log("user", user);
+    // hvis der ikke allerede findes en bruger i db med brugernavet
+    if(user[0] == null){
+        try{
+            const salt = await bcrypt.genSalt();
+            const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, salt);
+    
+            console.log(await bcrypt.compare(process.env.ADMIN_PASSWORD, hashedPassword));
+    
+            connection.run(
+                "INSERT INTO admins ('username', 'password') VALUES (?, ?)", 
+                [process.env.ADMIN_USERNAME, hashedPassword]); // bcrypt saves the salt inside the password
+        } catch {
+            console.log("ERROR in creating admin");
+        }
+    }
+})()
+*/
+
+
+import jwt from "jsonwebtoken";
+
+import { connection } from "./database/connectSqlite.js";
+
+app.post("/login", async (req, res) => {
+    // authenticate user
+    //https://www.youtube.com/watch?v=Ud5xKCYQTjM
+
+    // så jwt
+    //https://www.youtube.com/watch?v=mbsmsi7l3r4
+    const user = req.body;
+  
+    const adminFromDb = await connection.all("SELECT * FROM admins WHERE username=?", user.username);
+    
+    console.log(adminFromDb);
+    console.log(adminFromDb[0].password);
+
+
+    if(!adminFromDb){
+        res.status(400).send('Cannot find user');
+    }
+    try{
+        if(await bcrypt.compare(user.password, adminFromDb[0].password)){
+            res.sendStatus(200);
+        }
+        res.sendStatus(403);// forbidden
+    } catch{
+        res.sendStatus(500);
+    }
+
+
+});
+
+
+//------------------resten
+
+
+
 const dashBoardFrontpage = createDashboardPage("frontpage/frontpage.html", { 
     title: "Dashboard", 
     activeNavLink: "/dashboard",
@@ -84,12 +153,6 @@ const createProjectPage = createDashboardPage("create-project/createProject.html
     script: "/dashboard-views/create-project/createProject.js"
 });
 
-const editProjectsPage = createDashboardPage("edit-project/editProject.html", { 
-    title: "Rediger projekt", 
-    activeNavLink: "/dashboard/createProject", 
-    script: "/dashboard-views/edit-project/editProject.js"
-});
-
 //--------SERVE PAGES
 app.get("/dashboard", (req, res) => {
     res.send(dashBoardFrontpage)
@@ -99,28 +162,6 @@ app.get("/dashboard/createProject", (req, res) => {
 });
 
 import fetch from "node-fetch";
-
-app.get("/dashboard/editProject/:id", (req, res) => {
-
-    console.log(req.params.id);
-    // få fat i alt 
-    fetch(`http://localhost:8080/api/projects/${req.params.id}`)
-    .then(response => response.json())
-    .then(project => { 
-        //TODO find en måde at returnere project til html/js
-        //localStorage.setItem('currentProject', JSON.stringify(project));
-        //editProjectsPage = editProjectsPage.replace("%%PROJECT%%", {"hej": project[0]});
-        console.log(project[0]);
-        //res.render(editProjectsPage, { project: project });
-        res.send(editProjectsPage);
-    
-    })
-    .catch(error => {
-        console.log("Error getting project from id:", error);
-    });
-
-    //res.send(editProjectsPage)
-});
 
 
 
