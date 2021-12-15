@@ -21,17 +21,3 @@ Login-funk virker ikke
 
 
 
-
-
-
-
-FLOWET:
-Nå man sender en POST 3000/login -----> får jeg AccessToken OG refreshToken
-------> jeg bruger så denne accessToken i GET 8080/posts - headers: authorization: accessToken
-    -------> når dette ikke virker mere er den løbet ud
-    -------> så tager jeg refreshToken og siger POST 3000/token - body: {"token": refreshToken}
-        ------> den returnerer en ny accessToken
-            --------> denne indsætter jeg så i GET 8080/posts
-
-
-
