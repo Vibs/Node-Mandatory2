@@ -70,6 +70,9 @@ textarea {
 
 
 embed {
+    position: relative;
+    top: 50px;
+    margin-bottom: 50px;
     width: 50%;
     height: 1000px;
 }
@@ -89,10 +92,10 @@ embed {
 
 #frontpage-text {
     top: 50px;
-    left: 25%;
+    margin: auto;
     position: relative;
     display: flex;
-    width: 50%;
+    width: 40%;
     align-items: center;
     justify-content: center;
 }
